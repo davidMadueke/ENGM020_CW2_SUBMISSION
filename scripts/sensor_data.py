@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import rospy
 import numpy as np
+import math
 from david_dubins_car.msg import State # Defined a custom State message returning [X,Y,\THETA]^T
 
 # Initialize ROS node
@@ -18,11 +19,12 @@ def dubins_car_dynamics(state, v, R, delta):
     return np.array([x_dot, y_dot, theta_dot])
 
 # Function to integrate the dynamics using Euler's method
-def integrate_dynamics_euler(dynamics, initial_state, v, R, delta, dt, num_steps):
+def integrate_dynamics_euler(dynamics, initial_state, v, R, dt, num_steps):
     states = [initial_state]
     for _ in range(num_steps):
         while not rospy.is_shutdown():
         	current_state = states[-1]
+        	delta = pure_pursuit_controller(current_state)
         	next_state = current_state + dynamics(current_state, v, R, delta) * dt
         	states.append(next_state)
         	# Publish State
@@ -36,15 +38,12 @@ def integrate_dynamics_euler(dynamics, initial_state, v, R, delta, dt, num_steps
     return np.array(states)
 
 # Steering angle function (for example)
-def get_steering_angle(t):
+def pure_pursuit_controller(state, L_d = 1.0):
     return 0.1  # Constant steering angle for demonstration
 
 
 
 if __name__ == '__main__':
-    
-    # Integrate the dynamics
-    delta = get_steering_angle(0)
     # Define parameters
     v = 1.0  # Speed of the car
     R = 1.0  # Turn radius of the car
@@ -63,7 +62,7 @@ if __name__ == '__main__':
     dt = 0.1
     num_steps = int((t_end - t_start) / dt)
     try:
-        states = integrate_dynamics_euler(dubins_car_dynamics, initial_state, v, R, delta, dt, num_steps)
+        states = integrate_dynamics_euler(dubins_car_dynamics, initial_state, v, R , dt, num_steps)
     except rospy.ROSInterruptException:
         pass
 
