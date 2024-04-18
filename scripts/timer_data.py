@@ -14,7 +14,7 @@ pub_dt = rospy.Publisher('/simulation_dt', Float64, queue_size=10)
 pub_simulation_ended = rospy.Publisher('/simulation_ended', Bool, queue_size=10)
 
 def data_generator(t_start: int = 0, t_end: int = 120, 
-		dt: float = 0.1, simulation_ended: bool = False):
+		dt: float = 1, simulation_ended: bool = False):
 		
 	num_steps = int((t_end - t_start) / dt)
 	if not simulation_ended:
@@ -37,7 +37,7 @@ def data_generator(t_start: int = 0, t_end: int = 120,
 if __name__ == '__main__':
     # Time parameters
     t_start = 0
-    t_end = 120
+    t_end = 10
     dt = 0.1
     num_steps = int((t_end - t_start) / dt)
     try:

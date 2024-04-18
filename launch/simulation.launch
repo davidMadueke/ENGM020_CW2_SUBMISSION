@@ -1,0 +1,8 @@
+<launch>
+<node name="sensor_data" pkg="david_dubins_car" type="sensor_data.py"/>
+<node name="sensor_data_processor" pkg="david_dubins_car" type="sensor_data_processor.py"/>
+<node name="timer_data" pkg="david_dubins_car" type="timer_data.py"/>
+<node name="fixed_frame" pkg="david_dubins_car" type="fixed_frame.py"/>
+<node name="path_data" pkg="david_dubins_car" type="path_data.py"/>
+
+</launch>

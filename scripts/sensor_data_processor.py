@@ -6,12 +6,18 @@ from visualization_msgs.msg import Marker
 
 def callback(data):
     marker = Marker()
-    marker.header.frame_id = "map"
+    marker.header.frame_id = "world"
     marker.type = marker.SPHERE
     marker.action = marker.ADD
+    marker.lifetime.secs = 0
     marker.pose.position.x = data.x
     marker.pose.position.y = data.y
     marker.pose.position.z = 0
+
+    marker.pose.orientation.x = data.x
+    marker.pose.orientation.y = data.y
+    marker.pose.orientation.z = 0
+    marker.pose.orientation.w = data.theta
     marker.scale.x = 1.0
     marker.scale.y = 1.0
     marker.scale.z = 1.0
