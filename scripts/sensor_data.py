@@ -2,6 +2,7 @@
 import rospy
 import numpy as np
 import math
+from std_msgs.msg import Float64, Int64, Bool
 from david_dubins_car.msg import State # Defined a custom State message returning [X,Y,\THETA]^T
 
 # Initialize ROS node
@@ -41,7 +42,9 @@ def integrate_dynamics_euler(dynamics, initial_state, v, R, dt, num_steps):
 def pure_pursuit_controller(state, L_d = 1.0):
     return 0.1  # Constant steering angle for demonstration
 
-
+# Define callback function that monitors if the simulation has ended
+def simulation_callback(data):
+	pass
 
 if __name__ == '__main__':
     # Define parameters
